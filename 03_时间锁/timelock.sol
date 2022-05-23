@@ -128,7 +128,12 @@ contract TimeLock {
         bytes memory data;
         if (bytes(_func).length > 0) {
             // data = func selector + _data
+
             data = abi.encodePacked(bytes4(keccak256(bytes(_func))), _data);
+            // 由于_data是外部用encode方式打包好传进来的，因此这里只能用abi.encodePacked进行二次打包，这样就能在前面附上4字节函数选择器。
+            // 这样就和一开始用encodeWithSelector打包完全没区别了：4字节选择器+被padding的参数们
+            // 如果不用encodePacked，而是encode或者encodeWithSelector等遵从encode方式的编码方式
+            // 第一个参数会被从4字节padding成32字节，导致交给call的时候，虽然能够正确解析出前4个字节的函数选择器但多出来28字节的0，从而导致调用失败
         } else {
             // call fallback with data
             data = _data;
