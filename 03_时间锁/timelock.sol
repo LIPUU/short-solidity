@@ -93,9 +93,8 @@ contract TimeLock {
         emit Queue(txId, _target, _value, _func, _data, _timestamp);
     }
     // 为了让用户信任，大权限操作加入queen。必须经过固定的时间间隔之后才有权利调用execute来执行这个交易。
-    // 比如，首先给入queen的操作设置成只有owner才能调用。然后风险大的函数比如转账设置成private，从外部无法调用，内部只有queen一个接口。
+    // 比如，首先给入queen的操作设置成只有owner才能调用。
     // 即使是owner也只能先入queen然后再经过预定的时间才能执行。
-    // 再比如想要执行合约外的操作时(该合约可以通过delegtacall操作本合约)，也是这么个流程，先入queen。
 
     function execute(
         address _target,
