@@ -1,2 +1,2 @@
 # short-solidity
-short-solidit， 记录一些有用的solidity代码片段。
+short-solidity， 记录一些有用的solidity代码片段。
