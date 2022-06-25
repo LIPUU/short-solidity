@@ -8,7 +8,7 @@
     i'm abc function,print a num:5  
 
 仔细研究一下这个输出结果:  
-当abc函数被调时，打印`msg.data`，可以看到该调用的`calldata`就是`abi.encodeWithSelector(testCall.abc.selector, 5)`的结果。也就是说，在`calldata`的前四个字节能够被解析成被调合约地址的某个函数的函数选择器时，`call`就会调用这个函数。
+当abc函数被调时，打印`msg.data`，可以看到该调用的`calldata`就是`abi.encodeWithSelector(testCall.abc.selector, 5)`的结果。也就是说，在`calldata`的前四个字节能够被解析成被调合约地址的某个函数的函数选择器且后续参数也能被正确解析时，`call`就会调用这个函数。
 
 而执行`call("")`时，`calldata`是空的，空的`calldata`使得`receive`被调用。  
 至于`call("when a man love a woman")`, `calldata`不是空的，因此不会调用`receive`函数，而前四个字节又无法解析出目标合约地址的任意一个函数，因此会调用`fallback`函数。  
